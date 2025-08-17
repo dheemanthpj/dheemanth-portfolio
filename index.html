@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dheemanth - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .skill-bar { transition: width 1s ease-in-out; }
+        .fade-in { opacity: 0; transform: translateY(20px); transition: all 0.6s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+        .fade-in-up { opacity: 0; transform: translateY(30px); }
+        .fade-in-up.visible { opacity: 1; transform: translateY(0); transition: all 0.8s ease; }
+        .delay-200 { transition-delay: 0.2s; }
+        .delay-400 { transition-delay: 0.4s; }
+        .delay-600 { transition-delay: 0.6s; }
+        .delay-800 { transition-delay: 0.8s; }
+        
+        /* Particles Animation */
+        .particles-container { position: absolute; width: 100%; height: 100%; overflow: hidden; }
+        .particle { position: absolute; background: rgba(255,255,255,0.1); border-radius: 50%; }
+        .particle-1 { width: 4px; height: 4px; top: 20%; left: 10%; animation: float 6s ease-in-out infinite; }
+        .particle-2 { width: 6px; height: 6px; top: 60%; left: 80%; animation: float 8s ease-in-out infinite reverse; }
+        .particle-3 { width: 3px; height: 3px; top: 80%; left: 20%; animation: float 7s ease-in-out infinite; }
+        .particle-4 { width: 5px; height: 5px; top: 30%; left: 70%; animation: float 9s ease-in-out infinite reverse; }
+        .particle-5 { width: 4px; height: 4px; top: 10%; left: 60%; animation: float 5s ease-in-out infinite; }
+        .particle-6 { width: 7px; height: 7px; top: 70%; left: 40%; animation: float 10s ease-in-out infinite reverse; }
+        
+        /* Geometric Shapes */
+        .geometric-shapes { position: absolute; width: 100%; height: 100%; overflow: hidden; }
+        .shape { position: absolute; border: 1px solid rgba(255,255,255,0.1); }
+        .shape-1 { width: 100px; height: 100px; top: 15%; right: 10%; transform: rotate(45deg); animation: rotate 20s linear infinite; }
+        .shape-2 { width: 60px; height: 60px; bottom: 20%; left: 15%; border-radius: 50%; animation: pulse 4s ease-in-out infinite; }
+        .shape-3 { width: 80px; height: 80px; top: 50%; left: 5%; clip-path: polygon(50% 0%, 0% 100%, 100% 100%); animation: float 12s ease-in-out infinite; }
+        
+        /* Animations */
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-20px); } }
+        @keyframes rotate { from { transform: rotate(45deg); } to { transform: rotate(405deg); } }
+        @keyframes pulse { 0%, 100% { transform: scale(1); opacity: 0.1; } 50% { transform: scale(1.1); opacity: 0.2; } }
+        @keyframes gradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        
+        /* Typing Animation */
+        .cursor { animation: blink 1s infinite; }
+        @keyframes blink { 0%, 50% { opacity: 1; } 51%, 100% { opacity: 0; } }
+        
+        /* Gradient Text Animation */
+        .animate-gradient { background-size: 200% 200%; animation: gradient 3s ease infinite; }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 shadow-sm">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <div class="text-2xl font-bold text-gray-800">Dheemanth</div>
+                <div class="hidden md:flex space-x-8">
+                    <button onclick="showPage('home')" class="nav-link text-gray-600 hover:text-blue-600 transition-colors">Home</button>
+                    <button onclick="showPage('about')" class="nav-link text-gray-600 hover:text-blue-600 transition-colors">About</button>
+                    <button onclick="showPage('skills')" class="nav-link text-gray-600 hover:text-blue-600 transition-colors">Skills</button>
+                    <button onclick="showPage('projects')" class="nav-link text-gray-600 hover:text-blue-600 transition-colors">Projects</button>
+                    <button onclick="showPage('contact')" class="nav-link text-gray-600 hover:text-blue-600 transition-colors">Contact</button>
+                </div>
+                <button onclick="toggleMobileMenu()" class="md:hidden text-gray-600">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4">
+                <button onclick="showPage('home')" class="block w-full text-left py-2 text-gray-600 hover:text-blue-600">Home</button>
+                <button onclick="showPage('about')" class="block w-full text-left py-2 text-gray-600 hover:text-blue-600">About</button>
+                <button onclick="showPage('skills')" class="block w-full text-left py-2 text-gray-600 hover:text-blue-600">Skills</button>
+                <button onclick="showPage('projects')" class="block w-full text-left py-2 text-gray-600 hover:text-blue-600">Projects</button>
+                <button onclick="showPage('contact')" class="block w-full text-left py-2 text-gray-600 hover:text-blue-600">Contact</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <div id="home" class="page min-h-screen relative overflow-hidden">
+        <!-- Animated Background -->
+        <div class="absolute inset-0 bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-800">
+            <div class="absolute inset-0 bg-black opacity-20"></div>
+            <!-- Floating Particles -->
+            <div class="particles-container">
+                <div class="particle particle-1"></div>
+                <div class="particle particle-2"></div>
+                <div class="particle particle-3"></div>
+                <div class="particle particle-4"></div>
+                <div class="particle particle-5"></div>
+                <div class="particle particle-6"></div>
+            </div>
+            <!-- Geometric Shapes -->
+            <div class="geometric-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="relative z-10 min-h-screen flex items-center justify-center px-6">
+            <div class="text-center text-white max-w-4xl">
+                <!-- Animated Avatar -->
+                <div class="mb-8 fade-in-up">
+                    <div class="relative inline-block">
+                        <div class="w-32 h-32 mx-auto mb-6 relative">
+                            <div class="absolute inset-0 bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full animate-pulse"></div>
+                            <div class="absolute inset-2 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full flex items-center justify-center text-4xl animate-bounce">
+                                👨‍💻
+                            </div>
+                        </div>
+                        <div class="absolute -top-2 -right-2 w-6 h-6 bg-green-400 rounded-full animate-ping"></div>
+                    </div>
+                </div>
+
+                <!-- Typing Animation -->
+                <div class="fade-in-up delay-200">
+                    <h1 class="text-6xl md:text-8xl font-bold mb-4 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-600 bg-clip-text text-transparent animate-gradient">
+                        Dheemanth
+                    </h1>
+                    <div class="text-2xl md:text-3xl mb-6 h-12">
+                        <span class="typing-text opacity-90"></span>
+                        <span class="cursor">|</span>
+                    </div>
+                </div>
+
+                <!-- Animated Tags -->
+                <div class="fade-in-up delay-400 mb-8">
+                    <div class="flex flex-wrap justify-center gap-3 mb-8">
+                        <span class="px-4 py-2 bg-white/10 backdrop-blur-md rounded-full text-sm font-medium border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105">
+                            🎓 VCET Student
+                        </span>
+                        <span class="px-4 py-2 bg-white/10 backdrop-blur-md rounded-full text-sm font-medium border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105">
+                            💻 Full Stack Developer
+                        </span>
+                        <span class="px-4 py-2 bg-white/10 backdrop-blur-md rounded-full text-sm font-medium border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105">
+                            🧠 Problem Solver
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Interactive Buttons -->
+                <div class="fade-in-up delay-600 space-y-4 md:space-y-0 md:space-x-6 md:flex md:justify-center">
+                    <button onclick="showPage('about')" class="group relative px-8 py-4 bg-gradient-to-r from-cyan-500 to-blue-600 rounded-full font-semibold text-white overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/25">
+                        <span class="relative z-10 flex items-center justify-center">
+                            <span class="mr-2">Discover More</span>
+                            <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                            </svg>
+                        </span>
+                        <div class="absolute inset-0 bg-gradient-to-r from-blue-600 to-purple-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
+                    </button>
+                    
+                    <button onclick="showPage('contact')" class="group relative px-8 py-4 border-2 border-white/30 backdrop-blur-md rounded-full font-semibold text-white overflow-hidden transition-all duration-300 hover:scale-105 hover:bg-white hover:text-gray-900">
+                        <span class="relative z-10 flex items-center justify-center">
+                            <span class="mr-2">Let's Connect</span>
+                            <svg class="w-5 h-5 transform group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+                            </svg>
+                        </span>
+                    </button>
+                </div>
+
+                <!-- Scroll Indicator -->
+                <div class="fade-in-up delay-800 mt-16">
+                    <div class="flex flex-col items-center">
+                        <p class="text-sm opacity-70 mb-4">Scroll to explore</p>
+                        <div class="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center">
+                            <div class="w-1 h-3 bg-white rounded-full mt-2 animate-bounce"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Skills Preview -->
+        <div class="absolute bottom-0 left-0 right-0 bg-black/20 backdrop-blur-md border-t border-white/10 p-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid grid-cols-2 md:grid-cols-6 gap-4 text-center">
+                    <div class="skill-icon group cursor-pointer" onclick="showPage('skills')">
+                        <div class="text-2xl mb-1 group-hover:scale-110 transition-transform">⚡</div>
+                        <p class="text-xs text-white/80">C</p>
+                    </div>
+                    <div class="skill-icon group cursor-pointer" onclick="showPage('skills')">
+                        <div class="text-2xl mb-1 group-hover:scale-110 transition-transform">☕</div>
+                        <p class="text-xs text-white/80">Java</p>
+                    </div>
+                    <div class="skill-icon group cursor-pointer" onclick="showPage('skills')">
+                        <div class="text-2xl mb-1 group-hover:scale-110 transition-transform">🐍</div>
+                        <p class="text-xs text-white/80">Python</p>
+                    </div>
+                    <div class="skill-icon group cursor-pointer" onclick="showPage('skills')">
+                        <div class="text-2xl mb-1 group-hover:scale-110 transition-transform">🌐</div>
+                        <p class="text-xs text-white/80">Frontend</p>
+                    </div>
+                    <div class="skill-icon group cursor-pointer" onclick="showPage('skills')">
+                        <div class="text-2xl mb-1 group-hover:scale-110 transition-transform">🔧</div>
+                        <p class="text-xs text-white/80">Backend</p>
+                    </div>
+                    <div class="skill-icon group cursor-pointer" onclick="showPage('skills')">
+                        <div class="text-2xl mb-1 group-hover:scale-110 transition-transform">🗄️</div>
+                        <p class="text-xs text-white/80">SQL</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Page -->
+    <div id="about" class="page hidden min-h-screen pt-20">
+        <div class="max-w-6xl mx-auto px-6 py-16">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6">About Me</h2>
+                <div class="w-24 h-1 bg-blue-600 mx-auto"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="fade-in">
+                    <div class="relative w-80 h-80 mx-auto">
+                        <!-- Professional Photo -->
+                        <div class="w-full h-full bg-gradient-to-br from-blue-400 to-purple-500 rounded-2xl shadow-2xl overflow-hidden relative group">
+                            <!-- Replace this src with your actual photo URL or base64 -->
+                            <img id="profilePhoto" src="dheemanth5.jpg" 
+                                 alt="Dheemanth's Professional Photo" 
+                                 class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+                            
+                            <!-- Floating elements -->
+                            <div class="absolute top-8 right-8 w-4 h-4 bg-yellow-300 rounded-full animate-pulse"></div>
+                            <div class="absolute bottom-12 left-8 w-3 h-3 bg-green-300 rounded-full animate-bounce"></div>
+                            <div class="absolute top-20 left-12 w-2 h-2 bg-pink-300 rounded-full animate-ping"></div>
+                            
+                            <!-- Hover overlay with professional info -->
+                            <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                                <div class="text-white text-center">
+                                    <div class="text-2xl mb-2">👨‍💻</div>
+                                    <p class="text-sm font-semibold">Computer Science Engineer</p>
+                                    <p class="text-xs opacity-80 mt-1">VCET Student</p>
+                                </div>
+                            </div>
+                            
+                            <!-- Photo replacement instructions -->
+                            <!-- div class="absolute bottom-2 left-2 right-2 bg-black/60 text-white text-xs p-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">
+                                💡 Replace the src in img tag with your photo URL
+                            </div-->
+                        </div>
+                        <!-- Decorative elements -->
+                        <div class="absolute -top-4 -right-4 w-8 h-8 bg-yellow-400 rounded-full animate-pulse"></div>
+                        <div class="absolute -bottom-4 -left-4 w-6 h-6 bg-green-400 rounded-full animate-bounce"></div>
+                    </div>
+                </div>
+                
+                <div class="fade-in">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">Computer Science Engineering Student</h3>
+                    <p class="text-gray-600 text-lg leading-relaxed mb-6">
+                        I'm Dheemanth, a passionate Computer Science Engineering student at VCET. I love creating innovative solutions 
+                        and building applications that make a difference. My journey in technology spans across multiple domains, 
+                        from backend development to frontend design.
+                    </p>
+                    <p class="text-gray-600 text-lg leading-relaxed mb-8">
+                        With a strong foundation in programming languages like C, Java, and Python, combined with modern web 
+                        technologies, I'm always eager to take on new challenges and learn emerging technologies.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="text-center p-4 bg-white rounded-lg shadow-md card-hover">
+                            <div class="text-3xl mb-2">🎓</div>
+                            <h4 class="font-semibold text-gray-800">Education</h4>
+                            <p class="text-gray-600 text-sm">CSE at VCET</p>
+                        </div>
+                        <div class="text-center p-4 bg-white rounded-lg shadow-md card-hover">
+                            <div class="text-3xl mb-2">💻</div>
+                            <h4 class="font-semibold text-gray-800">Focus</h4>
+                            <p class="text-gray-600 text-sm">Full Stack Development</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Skills Page -->
+    <div id="skills" class="page hidden min-h-screen pt-20 bg-gray-100">
+        <div class="max-w-6xl mx-auto px-6 py-16">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6">My Skills</h2>
+                <div class="w-24 h-1 bg-blue-600 mx-auto"></div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- Programming Languages -->
+                <div class="bg-white p-8 rounded-xl shadow-lg card-hover fade-in">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                        <span class="text-3xl mr-3">⚡</span>
+                        Programming Languages
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="font-semibold text-gray-700">C</span>
+                                <span class="text-blue-600">85%</span>
+                            </div>
+                            <div class="bg-gray-200 rounded-full h-3">
+                                <div class="skill-bar bg-blue-600 h-3 rounded-full" style="width: 0%" data-width="85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="font-semibold text-gray-700">Java</span>
+                                <span class="text-blue-600">80%</span>
+                            </div>
+                            <div class="bg-gray-200 rounded-full h-3">
+                                <div class="skill-bar bg-blue-600 h-3 rounded-full" style="width: 0%" data-width="80%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="font-semibold text-gray-700">Python</span>
+                                <span class="text-blue-600">75%</span>
+                            </div>
+                            <div class="bg-gray-200 rounded-full h-3">
+                                <div class="skill-bar bg-blue-600 h-3 rounded-full" style="width: 0%" data-width="75%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Web Technologies -->
+                <div class="bg-white p-8 rounded-xl shadow-lg card-hover fade-in">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                        <span class="text-3xl mr-3">🌐</span>
+                        Web Technologies
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="font-semibold text-gray-700">HTML</span>
+                                <span class="text-green-600">90%</span>
+                            </div>
+                            <div class="bg-gray-200 rounded-full h-3">
+                                <div class="skill-bar bg-green-600 h-3 rounded-full" style="width: 0%" data-width="90%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="font-semibold text-gray-700">CSS/Tailwind CSS</span>
+                                <span class="text-green-600">85%</span>
+                            </div>
+                            <div class="bg-gray-200 rounded-full h-3">
+                                <div class="skill-bar bg-green-600 h-3 rounded-full" style="width: 0%" data-width="85%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="font-semibold text-gray-700">JavaScript</span>
+                                <span class="text-green-600">80%</span>
+                            </div>
+                            <div class="bg-gray-200 rounded-full h-3">
+                                <div class="skill-bar bg-green-600 h-3 rounded-full" style="width: 0%" data-width="80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Backend & Database -->
+                <div class="bg-white p-8 rounded-xl shadow-lg card-hover fade-in">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                        <span class="text-3xl mr-3">🔧</span>
+                        Backend & Database
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="font-semibold text-gray-700">Backend Development</span>
+                                <span class="text-purple-600">75%</span>
+                            </div>
+                            <div class="bg-gray-200 rounded-full h-3">
+                                <div class="skill-bar bg-purple-600 h-3 rounded-full" style="width: 0%" data-width="75%"></div>
+                            </div>
+                        </div>
+                        <div class="skill-item">
+                            <div class="flex justify-between mb-2">
+                                <span class="font-semibold text-gray-700">SQL</span>
+                                <span class="text-purple-600">80%</span>
+                            </div>
+                            <div class="bg-gray-200 rounded-full h-3">
+                                <div class="skill-bar bg-purple-600 h-3 rounded-full" style="width: 0%" data-width="80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Soft Skills -->
+                <div class="bg-white p-8 rounded-xl shadow-lg card-hover fade-in">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                        <span class="text-3xl mr-3">🎯</span>
+                        Core Strengths
+                    </h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="text-center p-4 bg-gray-50 rounded-lg">
+                            <div class="text-2xl mb-2">🧠</div>
+                            <span class="text-sm font-semibold text-gray-700">Problem Solving</span>
+                        </div>
+                        <div class="text-center p-4 bg-gray-50 rounded-lg">
+                            <div class="text-2xl mb-2">👥</div>
+                            <span class="text-sm font-semibold text-gray-700">Team Work</span>
+                        </div>
+                        <div class="text-center p-4 bg-gray-50 rounded-lg">
+                            <div class="text-2xl mb-2">📚</div>
+                            <span class="text-sm font-semibold text-gray-700">Quick Learning</span>
+                        </div>
+                        <div class="text-center p-4 bg-gray-50 rounded-lg">
+                            <div class="text-2xl mb-2">💡</div>
+                            <span class="text-sm font-semibold text-gray-700">Innovation</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Projects Page -->
+    <div id="projects" class="page hidden min-h-screen pt-20">
+        <div class="max-w-6xl mx-auto px-6 py-16">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6">My Projects</h2>
+                <div class="w-24 h-1 bg-blue-600 mx-auto"></div>
+                <p class="text-gray-600 mt-6 text-lg">Here are some projects I'm working on and planning to build</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <!-- Smart Fire Sprinkler Project -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover fade-in">
+                    <div class="bg-gradient-to-br from-red-500 to-orange-600 h-48 flex items-center justify-center relative">
+                        <div class="text-6xl">🔥</div>
+                        <div class="absolute top-4 right-4 text-2xl animate-pulse">💧</div>
+                        <div class="absolute bottom-4 left-4 text-xl">📡</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3 flex items-center">
+                            Smart Fire Sprinkler System
+                            <span class="ml-2 px-2 py-1 bg-red-100 text-red-600 text-xs rounded-full">IoT</span>
+                        </h3>
+                        <p class="text-gray-600 mb-4">
+                            An intelligent IoT-based fire detection and suppression system that automatically activates sprinklers 
+                            when fire is detected. Features real-time monitoring, smart sensors, and remote control capabilities.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">IoT</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-800 text-xs rounded-full">Sensors</span>
+                            <span class="px-3 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">Arduino</span>
+                            <span class="px-3 py-1 bg-orange-100 text-orange-800 text-xs rounded-full">C++</span>
+                        </div>
+                        <div class="space-y-2 mb-4 text-sm text-gray-600">
+                            <div class="flex items-center">
+                                <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                                Automatic fire detection & response
+                            </div>
+                            <div class="flex items-center">
+                                <span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                                Real-time monitoring system
+                            </div>
+                            <div class="flex items-center">
+                                <span class="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
+                                Smart sensor integration
+                            </div>
+                        </div>
+                        <button class="w-full bg-gradient-to-r from-red-500 to-orange-600 text-white py-2 rounded-lg hover:from-red-600 hover:to-orange-700 transition-all duration-300 transform hover:scale-105">
+                            View Project Details
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Phishing Detector Project -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover fade-in">
+                    <div class="bg-gradient-to-br from-blue-600 to-purple-700 h-48 flex items-center justify-center relative">
+                        <div class="text-6xl">🛡️</div>
+                        <div class="absolute top-4 right-4 text-2xl animate-bounce">⚠️</div>
+                        <div class="absolute bottom-4 left-4 text-xl">🔍</div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-3 flex items-center">
+                            Phishing Detector
+                            <span class="ml-2 px-2 py-1 bg-blue-100 text-blue-600 text-xs rounded-full">Security</span>
+                        </h3>
+                        <p class="text-gray-600 mb-4">
+                            Advanced cybersecurity tool that identifies and prevents phishing attacks by analyzing URLs, 
+                            email patterns, and website characteristics using machine learning algorithms.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="px-3 py-1 bg-blue-100 text-blue-800 text-xs rounded-full">Python</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-800 text-xs rounded-full">Machine Learning</span>
+                            <span class="px-3 py-1 bg-purple-100 text-purple-800 text-xs rounded-full">Security</span>
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-800 text-xs rounded-full">Algorithm</span>
+                        </div>
+                        <div class="space-y-2 mb-4 text-sm text-gray-600">
+                            <div class="flex items-center">
+                                <span class="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
+                                Real-time URL analysis
+                            </div>
+                            <div class="flex items-center">
+                                <span class="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
+                                ML-powered threat detection
+                            </div>
+                            <div class="flex items-center">
+                                <span class="w-2 h-2 bg-purple-500 rounded-full mr-2"></span>
+                                Email pattern recognition
+                            </div>
+                        </div>
+                        <button class="w-full bg-gradient-to-r from-blue-600 to-purple-700 text-white py-2 rounded-lg hover:from-blue-700 hover:to-purple-800 transition-all duration-300 transform hover:scale-105">
+                            View Project Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Page -->
+    <div id="contact" class="page hidden min-h-screen pt-20 bg-gray-100">
+        <div class="max-w-4xl mx-auto px-6 py-16">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6">Get In Touch</h2>
+                <div class="w-24 h-1 bg-blue-600 mx-auto"></div>
+                <p class="text-gray-600 mt-6 text-lg">Let's connect and discuss opportunities</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12">
+                <!-- Contact Info -->
+                <div class="fade-in">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-8">Let's Connect</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                                <span class="text-xl">📧</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Email</h4>
+                                <a href="mailto:dheemanth@vcet.edu" class="text-blue-600 hover:text-blue-800 transition-colors">dheemanthpj36@gmail.com</a>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                                <span class="text-xl">💼</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">LinkedIn</h4>
+                                <a href="https://linkedin.com/in/dheemanth-p-j-554985283" target="_blank" class="text-blue-600 hover:text-blue-800 transition-colors">Connect with me professionally</a>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center">
+                                <span class="text-xl">💻</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">GitHub</h4>
+                                <a href="https://github.com/dheemanthpj" target="_blank" class="text-blue-600 hover:text-blue-800 transition-colors">Check out my code repositories</a>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center">
+                                <span class="text-xl">🎓</span>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-gray-800">Institution</h4>
+                                <p class="text-gray-600">VCET - Computer Science Engineering</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="bg-white p-8 rounded-xl shadow-lg fade-in">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">Send a Message</h3>
+                    <form class="space-y-6" onsubmit="handleSubmit(event)">
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Name</label>
+                            <input type="text" id="senderName" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Your Name" required>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Email</label>
+                            <input type="email" id="senderEmail" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="your.email@example.com" required>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700 font-semibold mb-2">Message</label>
+                            <textarea rows="4" id="messageText" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" placeholder="Your message here..." required></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors">
+                            Send Message
+                        </button>
+                    </form>
+                    <div class="mt-4 p-3 bg-green-50 border border-green-200 rounded-lg">
+                        <p class="text-green-800 text-sm">✅ <strong>Functional Form:</strong> This form will open your email client to send the message directly to Dheemanth.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPage = 'home';
+
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.add('hidden');
+            });
+            
+            // Show selected page
+            document.getElementById(pageId).classList.remove('hidden');
+            currentPage = pageId;
+            
+            // Update nav active state
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('text-blue-600', 'font-semibold');
+                link.classList.add('text-gray-600');
+            });
+            
+            // Close mobile menu
+            document.getElementById('mobileMenu').classList.add('hidden');
+            
+            // Trigger animations
+            setTimeout(() => {
+                animateElements();
+                if (pageId === 'skills') {
+                    animateSkillBars();
+                }
+            }, 100);
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        }
+
+        function animateElements() {
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach((element, index) => {
+                setTimeout(() => {
+                    element.classList.add('visible');
+                }, index * 200);
+            });
+        }
+
+        function animateSkillBars() {
+            const skillBars = document.querySelectorAll('.skill-bar');
+            skillBars.forEach((bar, index) => {
+                setTimeout(() => {
+                    const width = bar.getAttribute('data-width');
+                    bar.style.width = width;
+                }, index * 300);
+            });
+        }
+
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('senderName').value;
+            const email = document.getElementById('senderEmail').value;
+            const message = document.getElementById('messageText').value;
+            
+            // Create email content
+            const subject = `Portfolio Contact from ${name}`;
+            const body = `Hi Dheemanth,
+
+${message}
+
+Best regards,
+${name}
+Email: ${email}`;
+            
+            // Create mailto link
+            const mailtoLink = `mailto:dheemanth@vcet.edu?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+            
+            // Open email client
+            window.location.href = mailtoLink;
+            
+            // Show success message
+            alert('Opening your email client to send the message to Dheemanth!');
+            
+            // Reset form
+            event.target.reset();
+        }
+
+        // Typing animation
+        const typingTexts = [
+            "Computer Science Student",
+            "Full Stack Developer", 
+            "Problem Solver",
+            "Code Enthusiast",
+            "Tech Innovator"
+        ];
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+
+        function typeText() {
+            const typingElement = document.querySelector('.typing-text');
+            if (!typingElement) return;
+
+            const currentText = typingTexts[textIndex];
+            
+            if (isDeleting) {
+                typingElement.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typingElement.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIndex === currentText.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % typingTexts.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(typeText, typeSpeed);
+        }
+
+
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            animateElements();
+            typeText();
+            
+            // Animate home page elements
+            setTimeout(() => {
+                document.querySelectorAll('.fade-in-up').forEach((element, index) => {
+                    setTimeout(() => {
+                        element.classList.add('visible');
+                    }, index * 200);
+                });
+            }, 500);
+        });
+
+        // Handle scroll animations
+        window.addEventListener('scroll', function() {
+            const elements = document.querySelectorAll('.fade-in:not(.visible)');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < window.innerHeight - elementVisible) {
+                    element.classList.add('visible');
+                }
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97067aa477031ec2',t:'MTc1NTQwNTQ3Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
